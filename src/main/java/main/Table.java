@@ -13,19 +13,11 @@ import net.miginfocom.swing.MigLayout;
 public class Table {
 
 	
-	ArrayList<ArrayList<Integer>> status;
 	ArrayList<Square> squares;
 	
 	public Table() {
 	
-		status = new ArrayList<ArrayList<Integer>>();
-		for (int i = 0; i < 8; i++) {
-			ArrayList<Integer> aux = new ArrayList<Integer>();
-			for (int j = 0; j < 0; j++) {
-				aux.add(0);
-			}
-			status.add(aux);
-		}
+		squares = new ArrayList<Square>();
 		// TODO Auto-generated constructor stub
 	}
 	

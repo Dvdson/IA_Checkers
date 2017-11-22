@@ -12,6 +12,7 @@ import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 
 public class Main {
 
@@ -48,9 +49,9 @@ public class Main {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 590, 518);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
 		Table table = new Table();
+		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 400, 400);
@@ -59,6 +60,14 @@ public class Main {
 		table.initialize(panel);
 		
 		frame.getContentPane().add(panel);
+		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.setBounds(444, 36, 89, 23);
+		frame.getContentPane().add(btnPlay);
+		
+		JButton btnTrainng = new JButton("trainng");
+		btnTrainng.setBounds(444, 96, 89, 23);
+		frame.getContentPane().add(btnTrainng);
 		
 	
 		
