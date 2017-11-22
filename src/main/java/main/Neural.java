@@ -1,4 +1,7 @@
+package main;
+
 import java.util.ArrayList;
+
 
 public class Neural {
 	
@@ -64,50 +67,6 @@ public class Neural {
 		double y = funcaoAtivacao(soma);
 		
 		return y;
-	}
-	
-	public static void main(String[] args) {
-		//Treinamento:
-		int[] entrada = {0, 0};
-		int saidaDesejada = 0;
-		execTreinamento(entrada, saidaDesejada);
-		entrada[0] = 0;
-		entrada[1] = 1;
-		saidaDesejada = 1;
-		execTreinamento(entrada, saidaDesejada);
-		entrada[0] = 1;
-		entrada[1] = 1;
-		saidaDesejada = 0;
-		execTreinamento(entrada, saidaDesejada);
-		entrada[0] = 1;
-		entrada[1] = 0;
-		saidaDesejada = 1;
-		execTreinamento(entrada, saidaDesejada);
-		
-		//Testes:
-		double saida;
-		
-		entrada[0] = 0;
-		entrada[1] = 0;
-		saidaDesejada = 0;
-		saida = exec(entrada);
-		System.out.println(saida == saidaDesejada);
-		entrada[0] = 0;
-		entrada[1] = 1;
-		saidaDesejada = 1;
-		saida = exec(entrada);
-		System.out.println(saida == saidaDesejada);
-		entrada[0] = 1;
-		entrada[1] = 0;
-		saidaDesejada = 1;
-		saida = exec(entrada);
-		System.out.println(saida == saidaDesejada);
-		entrada[0] = 1;
-		entrada[1] = 1;
-		saidaDesejada = 0;
-		saida = exec(entrada);
-		System.out.println(saida == saidaDesejada);
-
 	}
 
 }
