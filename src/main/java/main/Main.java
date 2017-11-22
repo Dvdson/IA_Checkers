@@ -13,6 +13,8 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
@@ -65,7 +67,11 @@ public class Main {
 		btnPlay.setBounds(444, 36, 89, 23);
 		frame.getContentPane().add(btnPlay);
 		
-		JButton btnTrainng = new JButton("trainng");
+		JButton btnTrainng = new JButton("Training");
+		btnTrainng.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnTrainng.setBounds(444, 96, 89, 23);
 		frame.getContentPane().add(btnTrainng);
 		
