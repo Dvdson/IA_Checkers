@@ -14,15 +14,21 @@ public class Agente1 {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public double sensor( Table table ){
-		ArrayList entradas = table.getEntradas();
-		net.entradas = entradas;
+	public Integer sensor( Table table ){
+		net.entradas = table.pieceTable();
 		
-		double saida = net.exec();
+		Integer saida = rounding(net.exec());
 		
 		return saida;
 	}
 	
-	
+	int rounding(double number){
+		
+		int x = (int) number;
+		
+		if(number - x < 0.5) return x;
+		return x+1;
+		
+	}
 	
 }

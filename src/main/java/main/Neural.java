@@ -40,8 +40,8 @@ public class Neural {
 	
 	//Treina a rede para um padrao dado uma saida desejada:
 	void execTreinamento(double saidaDesejada) {
-		double coefic = 0.5;
-		double tolerancia = 0.01;
+		double coefic = 0.3;
+		double tolerancia = 0.5;
 		double soma = soma();
 		double y = funcaoAtivacao(soma);
 		

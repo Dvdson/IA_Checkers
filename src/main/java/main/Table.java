@@ -3,6 +3,7 @@ package main;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -42,6 +43,14 @@ public class Table {
 		}
 		
 		
+	}
+	
+	public ArrayList<Integer> pieceTable(){
+		ArrayList<Integer> P_table = new ArrayList<Integer>();
+		for (int i = 0; i < B_squares.size(); i++) {
+			P_table.add(B_squares.get(i).piece);
+		}
+		return P_table;
 	}
 	
 }
