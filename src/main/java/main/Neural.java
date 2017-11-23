@@ -9,7 +9,8 @@ public class Neural {
 	ArrayList<Integer> entradas;
 	boolean isHyperbolic;
 	
-	public Neural(boolean isHyperbolic) {
+	public Neural(boolean isHyperbolic, ArrayList<Double> pesos) {
+		this.pesos = pesos;
 		this.isHyperbolic = isHyperbolic;
 	}
 	

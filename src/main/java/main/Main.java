@@ -13,6 +13,8 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -40,7 +42,6 @@ public class Main {
 	 * Create the application.
 	 */
 	public Main() {
-		
 		initialize();
 	}
 
