@@ -21,8 +21,11 @@ import com.google.gson.stream.JsonReader;
 public class Agente1 {
 	
 	Neural net;
+	Integer side;
 
-	Agente1() {
+	Agente1( Integer side) {
+		
+		this.side = side;
 		ArrayList<Double> pesos = new ArrayList<Double>();
 		
 		JFileChooser json_Opener = new JFileChooser(System.getProperty("user.dir"));
@@ -36,8 +39,6 @@ public class Agente1 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 		if(isOK(W)){
 			pesos = json_file.fromJson(W, ArrayList.class);
@@ -67,7 +68,15 @@ public class Agente1 {
 		
 		Integer saida = rounding(net.exec());
 		
+		
+		
 		return saida;
+	}
+	
+	public ArrayList<Integer> pieceToMove(Table table, Integer choice){
+		
+		table.
+		
 	}
 	
 	int rounding(double number){

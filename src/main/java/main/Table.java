@@ -15,7 +15,8 @@ public class Table {
 
 	
 	ArrayList<Square> B_squares;
-	ArrayList<JLabel> W_squares; 
+	ArrayList<JLabel> W_squares;
+	Integer chosed = -1;
 	
 	public Table() {
 	
@@ -31,7 +32,7 @@ public class Table {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if((i+j)%2 == 1) {
-					B_squares.add(new Square(i, j,"B_square.png ", "W_square.png"));
+					B_squares.add(new Square(i, j,"B_square.png ", "W_square.png", this));
 					panel.add(B_squares.get(B_squares.size()-1).label, "cell "+Integer.toString(i)+" "+Integer.toString(j)+"");
 				}else{
 					W_squares.add(new JLabel());
@@ -42,6 +43,10 @@ public class Table {
 			}
 		}
 		
+		
+	}
+	
+	public void movePiece(int X, int Y, int X1, int Y1){
 		
 	}
 	
