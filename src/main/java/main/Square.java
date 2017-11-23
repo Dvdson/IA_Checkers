@@ -17,6 +17,7 @@ public class Square {
 	Icon alter_image;
 	
 	public Square(int x, int y, String img1, String img2){
+		piece = 0;
 		X = x;
 		Y = y;
 		label = new JLabel();
