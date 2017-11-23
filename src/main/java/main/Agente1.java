@@ -14,9 +14,15 @@ public class Agente1 {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void sensor( Table table ){
+	public double sensor( Table table ){
+		ArrayList entradas = table.getEntradas();
+		net.entradas = entradas;
 		
+		double saida = net.exec();
+		
+		return saida;
 	}
+	
 	
 	
 }

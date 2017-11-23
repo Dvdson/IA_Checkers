@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Neural {
 	
 	ArrayList<Double> pesos = new ArrayList<Double>();
-	ArrayList<Integer> entradas = new ArrayList<Integer>();
+	ArrayList<Integer> entradas;
 	boolean isHyperbolic;
 	
 	public Neural(boolean isHyperbolic) {
