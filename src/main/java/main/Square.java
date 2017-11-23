@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 public class Square {
 
-	Integer value;
+	Integer piece;
 	Integer X;
 	Integer Y;
 	JLabel label;

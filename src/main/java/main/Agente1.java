@@ -14,12 +14,9 @@ public class Agente1 {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void sensor(Integer X, Integer Y, Table table ){
+	public void sensor( Table table ){
 		
 	}
-	
-	public
-	
 	
 	
 }
