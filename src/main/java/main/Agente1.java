@@ -3,6 +3,10 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -36,10 +40,13 @@ public class Agente1 {
 		JsonParser parser = new JsonParser();
 		JsonArray W = new JsonArray();
 		try {
+			
 			W = parser.parse(new FileReader(json_Opener.getSelectedFile())).getAsJsonArray();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IllegalStateException e){
+			
 		}
 		
 		save_data = json_Opener.getSelectedFile();
@@ -50,9 +57,11 @@ public class Agente1 {
 				Random r = new Random();
 				pesos.add(r.nextDouble());
 			}
+			
 		}
 
 		net = new Neural(false, pesos);
+		save();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -76,6 +85,18 @@ public class Agente1 {
 		
 		
 		return saida;
+	}
+	
+	public void save(){
+		try {
+			PrintWriter file = new PrintWriter(save_data);
+			file.print(new GsonBuilder().setPrettyPrinting().create().toJson(net.pesos));
+			file.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<Integer> pieceToMove(Table table, Integer choice){

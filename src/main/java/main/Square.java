@@ -13,7 +13,6 @@ public class Square {
 	Integer piece;
 	Integer X;
 	Integer Y;
-	static boolean to_chose;
 	ArrayList<Integer> sq_around;
 	JLabel label;
 	Icon base_image;
@@ -22,7 +21,6 @@ public class Square {
 	
 	public Square(int x, int y, String img1, String img2, final Table table){
 		this.table = table;
-		to_chose=false;
 		piece = 0;
 		X = x;
 		Y = y;
@@ -51,13 +49,48 @@ public class Square {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(to_chose){
 					table.chosed =(int) X*4 - Y/2;
-				}
 			}
 		});
 	}
 	
+	public void swap(Square sq){
 	
+		Integer aux_piece = sq.piece;
+		sq.piece = piece;
+		piece = aux_piece;
+		
+		Icon aux_base = sq.base_image;
+		sq.base_image = base_image;
+		base_image = aux_base;
+		
+		Icon aux_alter = sq.alter_image;
+		sq.alter_image = alter_image;
+		alter_image = aux_alter;
+		
+	}
+	public void setPiece(Integer p){
+		piece = p;
+		if(p == 1){
+			base_image = new ImageIcon("BP_B_square.png");
+			alter_image = new ImageIcon("WP_B_square.png");
+			label.setIcon(base_image);
+		}
+		if(p == 2){
+			base_image = new ImageIcon("BQ_B_square.png");
+			alter_image = new ImageIcon("WQ_B_square.png");
+			label.setIcon(base_image);
+		}
+		if(p == -1){
+			base_image = new ImageIcon("WP_B_square.png");
+			alter_image = new ImageIcon("BP_B_square.png");
+			label.setIcon(base_image);
+		}
+		if(p == -2){
+			base_image = new ImageIcon("WQ_B_square.png");
+			alter_image = new ImageIcon("BQ_B_square.png");
+			label.setIcon(base_image);
+		}
+	}
 	
 }

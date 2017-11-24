@@ -33,11 +33,11 @@ public class Table {
 			for (int j = 0; j < 8; j++) {
 				if((i+j)%2 == 1) {
 					B_squares.add(new Square(j, i,"B_square.png ", "W_square.png", this));
-					panel.add(B_squares.get(B_squares.size()-1).label, "cell "+Integer.toString(i)+" "+Integer.toString(j)+"");
+					panel.add(B_squares.get(B_squares.size()-1).label, "cell "+Integer.toString(j)+" "+Integer.toString(i)+"");
 				}else{
 					W_squares.add(new JLabel());
 					W_squares.get(W_squares.size()-1).setIcon(new ImageIcon("W_square.png"));
-					panel.add(W_squares.get(W_squares.size()-1),"cell "+Integer.toString(i)+" "+Integer.toString(j));
+					panel.add(W_squares.get(W_squares.size()-1),"cell "+Integer.toString(j)+" "+Integer.toString(i));
 				}
 				
 			}
@@ -58,7 +58,17 @@ public class Table {
 		return P_table;
 	}
 	
-	loadGame(){
+	public void move(Integer piece, Integer move ){
+		B_squares.get(piece).swap(B_squares.get(move));
+	}
+	
+	void loadGame(){
+		for (int i = 0; i < 12; i++) {
+			B_squares.get(i).setPiece(1);
+		}
 		
+		for (int i = 20; i < 32; i++) {
+			B_squares.get(i).setPiece(-1);
+		}
 	}
 }

@@ -53,7 +53,7 @@ public class Main {
 		frame.setBounds(100, 100, 590, 518);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Table table = new Table();
+		final Table table = new Table();
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -65,12 +65,18 @@ public class Main {
 		frame.getContentPane().add(panel);
 		
 		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				play(table, new Agente1(1), new Agente1(-1));
+			}
+		});
 		btnPlay.setBounds(444, 36, 89, 23);
 		frame.getContentPane().add(btnPlay);
 		
 		JButton btnTrainng = new JButton("Training");
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Trainnig(table, new Agente1(1), new Agente1(-1));
 			}
 		});
 		btnTrainng.setBounds(444, 96, 89, 23);
@@ -81,14 +87,14 @@ public class Main {
 		
 	}
 	
-	public void play(Table table,Agente1 player_a, Agente1 player_a){
+	public void play(Table table,Agente1 player_a, Agente1 player_b){
 		
 		
 		
 	}
 	
-	public void play(Table table,Agente1 player_a, Agente1 player_a){
-		
+	public void Trainnig(Table table,Agente1 player_a, Agente1 player_b){
+		table.loadGame();
 	}
 	
 }
