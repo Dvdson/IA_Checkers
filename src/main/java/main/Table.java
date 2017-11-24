@@ -32,7 +32,7 @@ public class Table {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if((i+j)%2 == 1) {
-					B_squares.add(new Square(i, j,"B_square.png ", "W_square.png", this));
+					B_squares.add(new Square(j, i,"B_square.png ", "W_square.png", this));
 					panel.add(B_squares.get(B_squares.size()-1).label, "cell "+Integer.toString(i)+" "+Integer.toString(j)+"");
 				}else{
 					W_squares.add(new JLabel());
@@ -50,12 +50,15 @@ public class Table {
 		
 	}
 	
-	public ArrayList<Integer> pieceTable(){
+	public ArrayList<Integer> pieceTable(int side){
 		ArrayList<Integer> P_table = new ArrayList<Integer>();
 		for (int i = 0; i < B_squares.size(); i++) {
-			P_table.add(B_squares.get(i).piece);
+			P_table.add(B_squares.get(i).piece*side);
 		}
 		return P_table;
 	}
 	
+	loadGame(){
+		
+	}
 }

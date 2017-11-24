@@ -80,4 +80,15 @@ public class Main {
 		
 		
 	}
+	
+	public void play(Table table,Agente1 player_a, Agente1 player_a){
+		
+		
+		
+	}
+	
+	public void play(Table table,Agente1 player_a, Agente1 player_a){
+		
+	}
+	
 }

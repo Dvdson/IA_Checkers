@@ -26,11 +26,12 @@ public class Square {
 		piece = 0;
 		X = x;
 		Y = y;
+		sq_around = new ArrayList<Integer>();
 		
-		if(x-1 >= 0 && y-1 >= 0) sq_around.add((x-1)*4 + (y-1)/2);
-		if(x-1 >= 0 && y+1 < 8) sq_around.add((x-1)*4 + (y+1)/2);
-		if(x+1 < 8 && y-1 >= 0) sq_around.add((x+1)*4 + (y-1)/2);
-		if(x+1 < 8 && y+1 < 8) sq_around.add((x+1)*4 + (y+1)/2);
+		if(x-1 >= 0 && y-1 >= 0) sq_around.add((x-1)*4 + (y-1)/2); else sq_around.add(-1);
+		if(x+1 < 8 && y-1 >= 0) sq_around.add((x+1)*4 + (y-1)/2); else sq_around.add(-1);
+		if(x-1 >= 0 && y+1 < 8) sq_around.add((x-1)*4 + (y+1)/2); else sq_around.add(-1);
+		if(x+1 < 8 && y+1 < 8) sq_around.add((x+1)*4 + (y+1)/2); else sq_around.add(-1);
 		
 		label = new JLabel();
 		base_image = new ImageIcon(img1);
