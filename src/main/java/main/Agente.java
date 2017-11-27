@@ -135,8 +135,7 @@ public class Agente {
 						}
 					}
 				}
-			}
-				
+			}				
 		}
 
 		if(minor.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
