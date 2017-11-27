@@ -32,7 +32,7 @@ public class JsonChecker {
 		
 		if(W.has("pesos")){
 			if(W.get("pesos").isJsonArray()){
-				if(W.get("pesos").getAsJsonArray().size() == 32){
+				if(W.get("pesos").getAsJsonArray().size() == 33){
 					
 				}else return false;// if do not have "memory"  attribute
 			}else return false;// if do not have "memory"  attribute
