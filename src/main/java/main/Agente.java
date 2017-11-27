@@ -50,16 +50,16 @@ public class Agente {
 	
 	
 	
-	public Integer sensor( Table table ){
+	public ArrayList<Integer> play( Table table ){
 		
 		net.entradas = table.pieceTable(side);
 		net.entradas.add(1); //bias
 		
 		Integer saida = rounding(net.exec());
 		
+		return pieceToMove(table,saida);
 		
 		
-		return saida;
 	}
 	
 	public void save(){
