@@ -1,6 +1,20 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
+
+import javax.swing.JFileChooser;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 public class Neural {
@@ -8,10 +22,65 @@ public class Neural {
 	ArrayList<Double> pesos = new ArrayList<Double>();
 	ArrayList<Integer> entradas;
 	boolean isHyperbolic;
+	File save_data;
+	JsonObject data;
 	
-	public Neural(boolean isHyperbolic, ArrayList<Double> pesos) {
-		this.pesos = pesos;
-		this.isHyperbolic = isHyperbolic;
+	public Neural(File json_file) {
+		
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();			
+		JsonParser parser = new JsonParser();
+		JsonArray W = new JsonArray();
+		try {			
+			W = parser.parse(new FileReader(json_file)).getAsJsonArray();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e){
+			
+		}
+		
+		if(isOK(W)){
+			pesos = gson.fromJson(W, ArrayList.class);
+		}else{
+			for (int i = 0; i < 33; i++) {
+				Random r = new Random();
+				pesos.add(r.nextDouble());
+			}
+			
+		}
+		
+		save_data = json_Opener.getSelectedFile();
+		
+		
+	}
+	
+	public boolean isOK(JsonObject W){
+		
+		if(W.has("memory")){
+			if(W.get("memory").isJsonArray()){
+				for (int i = 0; i < W.get("memory").getAsJsonArray().size(); i++) {
+					if((W.get("memory").getAsJsonArray().get(i).getAsJsonObject().has("input") &&
+						W.get("memory").getAsJsonArray().get(i).getAsJsonObject().has("output"))){
+						if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("input").isJsonArray()){
+							if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("input").getAsJsonArray().size() == 32){
+								for (int j = 0; j < 32; j++) {
+									if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("input").getAsJsonArray().get(j).isJsonPrimitive()){
+										if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("input").getAsJsonArray().get(j).getAsJsonPrimitive().isNumber()){}
+										else return false;// if input[j] attribute do not is a Number
+									}else return false;// if input[j] attribute do not is a primitive
+								}
+							}else return false;// if input attribute do not has size of 32
+						}else return false;// if input attribute do not is a Number
+						if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("output").isJsonPrimitive()){
+							if(W.get("memory").getAsJsonArray().get(i).getAsJsonObject().get("output").getAsJsonPrimitive().isNumber()){}
+							else return false;// if memory attribute do not is a Number
+						}else return false;// if memory attribute do not is a Number
+					}else return false;// if do not have "input" and "output"  attribute
+				}
+			}else return false;// if memory attribute do not is a JsonArray
+		}else return false;// if do not have "memory"  attribute
+		
 	}
 	
 	double soma() {
@@ -59,6 +128,20 @@ public class Neural {
 
 		}
 		
+	}
+	
+	public void save(){
+		try {
+			
+			
+			PrintWriter file = new PrintWriter(save_data);
+			file.print(new GsonBuilder().setPrettyPrinting().create().toJson(data));
+			file.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Retorna a saida da rede para o padrao de entrada:

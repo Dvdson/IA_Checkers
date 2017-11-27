@@ -67,7 +67,7 @@ public class Main {
 		JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				play(table, new Agente1(1), new Agente1(-1));
+				play(table, new Agente(1), new Agente(-1));
 			}
 		});
 		btnPlay.setBounds(444, 36, 89, 23);
@@ -76,7 +76,7 @@ public class Main {
 		JButton btnTrainng = new JButton("Training");
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Trainnig(table, new Agente1(1), new Agente1(-1));
+				Trainnig(table, new Agente(1), new Agente(-1));
 			}
 		});
 		btnTrainng.setBounds(444, 96, 89, 23);
@@ -87,13 +87,13 @@ public class Main {
 		
 	}
 	
-	public void play(Table table,Agente1 player_a, Agente1 player_b){
-		
+	public void play(Table table,Agente player_a, Agente player_b){
+		table.loadGame();
 		
 		
 	}
 	
-	public void Trainnig(Table table,Agente1 player_a, Agente1 player_b){
+	public void Trainnig(Table table,Agente player_a, Agente player_b){
 		table.loadGame();
 	}
 	
