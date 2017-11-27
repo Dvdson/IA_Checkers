@@ -32,7 +32,6 @@ public class Agente {
 	Agente( Integer side) {
 		
 		this.side = side;
-		ArrayList<Double> pesos = new ArrayList<Double>();
 		
 		JFileChooser json_Opener = new JFileChooser(System.getProperty("user.dir"));
 		String player;
@@ -44,7 +43,7 @@ public class Agente {
 		
 		json_Opener.showOpenDialog(null); 
 
-		net = new Neural();
+		net = new Neural(json_Opener.getSelectedFile());
 		save();
 		// TODO Auto-generated constructor stub
 	}

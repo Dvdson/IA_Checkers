@@ -30,9 +30,9 @@ public class Neural {
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();			
 		JsonParser parser = new JsonParser();
-		JsonArray W = new JsonArray();
+		JsonObject W = new JsonObject();
 		try {			
-			W = parser.parse(new FileReader(json_file)).getAsJsonArray();
+			W = parser.parse(new FileReader(json_file)).getAsJsonObject();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class Neural {
 			
 		}
 		
-		save_data = json_Opener.getSelectedFile();
+		save_data = json_file;
 		
 		
 	}
