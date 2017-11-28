@@ -98,7 +98,7 @@ public class Main {
 				player_a.play(table);
 				
 			}else{
-				
+				player_b.play(table);
 			}
 			
 			++player;
