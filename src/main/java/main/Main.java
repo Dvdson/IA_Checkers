@@ -50,7 +50,7 @@ public class Main {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 590, 518);
+		frame.setBounds(100, 100, 651, 445);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		final Table table = new Table();
@@ -64,13 +64,14 @@ public class Main {
 		
 		frame.getContentPane().add(panel);
 		
-		JButton btnPlay = new JButton("Play");
+		final JButton btnPlay = new JButton("Play");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				play(table, new Agente(1), new Agente(-1));
 			}
 		});
-		btnPlay.setBounds(444, 36, 89, 23);
+		
+		btnPlay.setBounds(440, 125, 164, 44);
 		frame.getContentPane().add(btnPlay);
 		
 		JButton btnTrainng = new JButton("Training");
@@ -79,8 +80,26 @@ public class Main {
 				Trainnig(table, new Agente(1), new Agente(-1));
 			}
 		});
-		btnTrainng.setBounds(444, 96, 89, 23);
+		btnTrainng.setBounds(440, 200, 164, 44);
 		frame.getContentPane().add(btnTrainng);
+		
+		JButton btnNewGame = new JButton("New Game");
+		btnNewGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnNewGame.setBounds(469, 28, 103, 23);
+		frame.getContentPane().add(btnNewGame);
+		
+		JButton btnNewTrain = new JButton("New Trainning");
+		btnNewTrain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewTrain.setBounds(469, 62, 103, 23);
+		frame.getContentPane().add(btnNewTrain);
+		
 		
 	
 		
@@ -109,5 +128,4 @@ public class Main {
 	public void Trainnig(Table table,Agente player_a, Agente player_b){
 		table.loadGame();
 	}
-	
 }
