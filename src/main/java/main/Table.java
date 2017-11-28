@@ -66,6 +66,7 @@ public class Table {
 					if(sq_around.get(i) > 0) {
 						this.B_squares.get(pos).setPiece(0);
 						this.B_squares.get(i).setPiece(piece);
+						sq_around = this.B_squares.get(i).sq_around;
 						//atualiza a posicao atual da peca
 						pos = i;
 						hasSq_around = true;
@@ -85,6 +86,7 @@ public class Table {
 					if(sq_around.get(i) > 0) {
 						this.B_squares.get(pos).setPiece(0);
 						this.B_squares.get(i).setPiece(piece);
+						sq_around = this.B_squares.get(i).sq_around;
 						//atualiza a posicao atual da peca
 						pos = i;
 						hasSq_around = true;
@@ -104,6 +106,7 @@ public class Table {
 					if(sq_around.get(i) < 0) {
 						this.B_squares.get(pos).setPiece(0);
 						this.B_squares.get(i).setPiece(piece);
+						sq_around = this.B_squares.get(i).sq_around;
 						//atualiza a posicao atual da peca
 						pos = i;
 						hasSq_around = true;
@@ -123,6 +126,7 @@ public class Table {
 					if(sq_around.get(i) < 0) {
 						this.B_squares.get(pos).setPiece(0);
 						this.B_squares.get(i).setPiece(piece);
+						sq_around = this.B_squares.get(i).sq_around;
 						//atualiza a posicao atual da peca
 						pos = i;
 						hasSq_around = true;
