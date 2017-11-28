@@ -46,8 +46,92 @@ public class Table {
 		
 	}
 	
-	public void movePiece(int X, int Y, int X1, int Y1){
+	public void movePiece(int pos, int next){
+		int piece = this.B_squares.get(pos).piece;
+		ArrayList<Integer> sq_around = this.B_squares.get(pos).sq_around;
+		this.B_squares.get(pos).setPiece(0);
+		this.B_squares.get(next).setPiece(piece);
+		//atualiza a posicao atual da peca
+		pos = next;
+		boolean hasSq_around = true;
 		
+		//Se e a vez do adversario
+		if(piece == -1) {
+			
+			while(hasSq_around) {
+				hasSq_around = false;
+				//percorre as posicoes que o adversario pode se mover
+				for(int i = 2; i < sq_around.size(); i++) {
+					//se tem peca do jogador come a peca
+					if(sq_around.get(i) > 0) {
+						this.B_squares.get(pos).setPiece(0);
+						this.B_squares.get(i).setPiece(piece);
+						//atualiza a posicao atual da peca
+						pos = i;
+						hasSq_around = true;
+					}
+					
+				}
+			}
+		}
+		//Se e a vez do adversario e e uma rainha
+		else if(piece == -2) {
+			
+			while(hasSq_around) {
+				hasSq_around = false;
+				//percorre as posicoes que o adversario pode se mover
+				for(int i = 0; i < sq_around.size(); i++) {
+					//se tem peca do jogador come a peca
+					if(sq_around.get(i) > 0) {
+						this.B_squares.get(pos).setPiece(0);
+						this.B_squares.get(i).setPiece(piece);
+						//atualiza a posicao atual da peca
+						pos = i;
+						hasSq_around = true;
+					}
+					
+				}
+			}
+		}
+		//Se e a vez do jogador
+		else if (piece == 1) {
+			
+			while(hasSq_around) {
+				hasSq_around = false;
+				//percorre as posicoes que o jogador pode se mover
+				for(int i = 1; i >= 0; i--) {
+					//se tem peca do adversario come a peca
+					if(sq_around.get(i) < 0) {
+						this.B_squares.get(pos).setPiece(0);
+						this.B_squares.get(i).setPiece(piece);
+						//atualiza a posicao atual da peca
+						pos = i;
+						hasSq_around = true;
+					}
+					
+				}
+			}
+		}
+		//Se e a vez do jogador e e uma rainha
+		else if (piece == 2) {
+			
+			while(hasSq_around) {
+				hasSq_around = false;
+				//percorre as posicoes que o jogador pode se mover
+				for(int i = 0; i < sq_around.size(); i++) {
+					//se tem peca do adversario come a peca
+					if(sq_around.get(i) < 0) {
+						this.B_squares.get(pos).setPiece(0);
+						this.B_squares.get(i).setPiece(piece);
+						//atualiza a posicao atual da peca
+						pos = i;
+						hasSq_around = true;
+					}
+					
+				}
+			}
+		}
+
 	}
 	
 	public ArrayList<Integer> pieceTable(int side){
