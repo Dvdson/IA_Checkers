@@ -251,6 +251,8 @@ public class Agente {
 	}
 	
 	int rounding(double number){
+		if(number > 31) number = 31;
+		if(number < 0) number = 0;
 		
 		int x = (int) number;
 		

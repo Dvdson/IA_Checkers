@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonArray;import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -30,9 +30,10 @@ public class Neural {
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();			
 		JsonParser parser = new JsonParser();
-		JsonObject W = new JsonObject();
+		
+		
 		try {			
-			W = parser.parse(new FileReader(json_file)).getAsJsonObject();
+			data = parser.parse(new FileReader(json_file)).getAsJsonObject();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,12 +41,15 @@ public class Neural {
 			
 		}
 		
-		if(JsonChecker.isOK(W)){
-			pesos = gson.fromJson(W, ArrayList.class);
+		if(JsonChecker.isOK(data)){
+			pesos = gson.fromJson(data.get("pesos"), ArrayList.class);
 		}else{
+			data.add("memory", new JsonArray());
+			data.add("pesos", new JsonArray(33));
 			for (int i = 0; i < 33; i++) {
 				Random r = new Random();
 				pesos.add(r.nextDouble());
+				data.get("pesos").getAsJsonArray().add(pesos.get(i));
 			}
 			
 		}
@@ -83,13 +87,27 @@ public class Neural {
 	}
 	
 	//Treina a rede para um padrao dado uma saida desejada:
-	void execTreinamento(double saidaDesejada) {
+	void execTreinamento(Integer saidaDesejada) {
 		double coefic = 0.3;
 		double tolerancia = 0.5;
 		double soma = soma();
 		double y = funcaoAtivacao(soma);
 		
+		JsonObject aux = new JsonObject();
+		
+		aux.add("input", new JsonArray());
+		for (int i = 0; i < entradas.size(); i++) {
+			aux.get("input").getAsJsonArray().add(entradas.get(i));
+		}
+		aux.addProperty("output", saidaDesejada);;
+		
+		data.get("memory").getAsJsonArray().add(aux);
+		
+		double count = 0;
+		
 		while(y >= saidaDesejada + tolerancia || y <= saidaDesejada - tolerancia) {
+			
+			//TODO realizar treinamento para todas as entradas em data.get("memory").
 			
 			//Se a saida quantizada for diferente da desejada, atualiza os pesos:
 			for(int i = 0; i < pesos.size(); i++) {
@@ -106,7 +124,6 @@ public class Neural {
 	
 	public void save(){
 		try {
-			
 			
 			PrintWriter file = new PrintWriter(save_data);
 			file.print(new GsonBuilder().setPrettyPrinting().create().toJson(data));

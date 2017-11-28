@@ -63,12 +63,21 @@ public class Table {
 	}
 	
 	void loadGame(){
-		for (int i = 0; i < 12; i++) {
-			B_squares.get(i).setPiece(1);
-		}
-		
-		for (int i = 20; i < 32; i++) {
-			B_squares.get(i).setPiece(-1);
+		for (int i = 0; i < 32; i++) {
+			if(i < 12)B_squares.get(i).setPiece(1);
+			if(i >= 12 && i < 20)B_squares.get(i).setPiece(0);
+			if(i >= 20)B_squares.get(i).setPiece(-1);
 		}
 	}
+	
+	public int winner(){
+		int p_a = 0, p_b = 0;
+		for (Square square : B_squares) {
+			if(square.piece == 1) p_a = 1;
+			if(square.piece == -1) p_b = -1;
+		}
+		
+		return p_a + p_b;
+	}
+	
 }

@@ -88,8 +88,21 @@ public class Main {
 	}
 	
 	public void play(Table table,Agente player_a, Agente player_b){
-		table.loadGame();
 		
+		
+		table.loadGame();
+		int player = 0;
+		while(table.winner() == 0){
+			if(player%2 == 0){
+				
+				player_a.play(table);
+				
+			}else{
+				
+			}
+			
+			++player;
+		}
 		
 	}
 	

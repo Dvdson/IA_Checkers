@@ -91,6 +91,11 @@ public class Square {
 			alter_image = new ImageIcon("BQ_B_square.png");
 			label.setIcon(base_image);
 		}
+		if(p == 0){
+			base_image = new ImageIcon("W_square.png");
+			alter_image = new ImageIcon("B_square.png");
+			label.setIcon(base_image);
+		}
 	}
 	
 }
