@@ -61,13 +61,12 @@ public class Neural {
 	
 
 	
-	double soma() {
+	double soma(ArrayList<Integer> entradas) {
 		double soma = 0;
 		
 		for(int i = 0; i < pesos.size(); i++) {
-			soma += pesos.get(i)*entradas.get(i);
+			soma += pesos.get(i)*((double)entradas.get(i));
 		}
-		
 		
 		return soma;
 	}
@@ -90,8 +89,7 @@ public class Neural {
 	void execTreinamento(Integer saidaDesejada) {
 		double coefic = 0.3;
 		double tolerancia = 0.5;
-		double soma = soma();
-		double y = funcaoAtivacao(soma);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		
 		JsonObject aux = new JsonObject();
 		
@@ -99,26 +97,39 @@ public class Neural {
 		for (int i = 0; i < entradas.size(); i++) {
 			aux.get("input").getAsJsonArray().add(entradas.get(i));
 		}
-		aux.addProperty("output", saidaDesejada);;
-		
+		aux.addProperty("output", saidaDesejada);;	
 		data.get("memory").getAsJsonArray().add(aux);
 		
-		double count = 0;
-		
-		while(y >= saidaDesejada + tolerancia || y <= saidaDesejada - tolerancia) {
-			
-			//TODO realizar treinamento para todas as entradas em data.get("memory").
-			
-			//Se a saida quantizada for diferente da desejada, atualiza os pesos:
-			for(int i = 0; i < pesos.size(); i++) {
-				pesos.set(i, pesos.get(i) + coefic*(saidaDesejada - y)*entradas.get(i)*derF(soma));
-			}
-			
-			soma = soma();
-			y = funcaoAtivacao(soma);
-			System.out.println("treinando");
+		Integer trainning_size = data.get("memory").getAsJsonArray().size();
 
+		for (int count = trainning_size - 1; count < trainning_size;) {
+			ArrayList<Integer> entrada = gson.fromJson(data.get("memory").getAsJsonArray().get(count).getAsJsonObject().get("input").getAsJsonArray(),ArrayList.class);
+			double soma = soma(entrada);
+			double y = funcaoAtivacao(soma);
+			
+			boolean not_expected = false;
+			
+			while(y >= saidaDesejada + tolerancia || y <= saidaDesejada - tolerancia) {
+				
+				//TODO realizar treinamento para todas as entradas em data.get("memory").
+				//Se a saida quantizada for diferente da desejada, atualiza os pesos:
+				for(int i = 0; i < pesos.size(); i++) {
+					pesos.set(i, pesos.get(i) + coefic*(saidaDesejada - y)*entradas.get(i)*derF(soma));
+				}
+				
+				soma = soma(entrada);
+				y = funcaoAtivacao(soma);
+				System.out.println("treinando");
+				not_expected = true;
+				
+			}
+			count++;
+			
+			if (not_expected) count = 0;
+			
+			
 		}
+		
 		
 	}
 	
@@ -138,7 +149,7 @@ public class Neural {
 	//Retorna a saida da rede para o padrao de entrada:
 	double exec() {
 		
-		double soma = soma();
+		double soma = soma(this.entradas);
 		double y = funcaoAtivacao(soma);
 		
 		return y;

@@ -27,7 +27,7 @@ public class JsonChecker {
 						}else return false;// if output attribute is not a primitive
 					}else return false;// if do not have "input" and "output"  attribute
 				}
-			}else return false;// if memory attribute do not is a JsonArray
+			}// if memory attribute do not is a JsonArray
 		}else return false;// if do not have "memory"  attribute
 		
 		if(W.has("pesos")){
