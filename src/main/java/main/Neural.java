@@ -97,7 +97,14 @@ public class Neural {
 		for (int i = 0; i < entradas.size(); i++) {
 			aux.get("input").getAsJsonArray().add(entradas.get(i));
 		}
-		aux.addProperty("output", saidaDesejada);;	
+		aux.addProperty("output", saidaDesejada);
+		
+		Integer input_pos = JsonChecker.hasInput(data.get("memory").getAsJsonArray(), aux);
+		
+		if(input_pos < data.get("memory").getAsJsonArray().size()){
+			data.get("memory").getAsJsonArray().remove(input_pos);
+		}
+		
 		data.get("memory").getAsJsonArray().add(aux);
 		
 		Integer trainning_size = data.get("memory").getAsJsonArray().size();

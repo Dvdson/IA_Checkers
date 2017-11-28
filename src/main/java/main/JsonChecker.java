@@ -1,5 +1,9 @@
 package main;
 
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class JsonChecker {
@@ -27,7 +31,7 @@ public class JsonChecker {
 						}else return false;// if output attribute is not a primitive
 					}else return false;// if do not have "input" and "output"  attribute
 				}
-			}// if memory attribute do not is a JsonArray
+			}else return false;// if memory attribute do not is a JsonArray
 		}else return false;// if do not have "memory"  attribute
 		
 		if(W.has("pesos")){
@@ -41,5 +45,15 @@ public class JsonChecker {
 		return true;
 	}
 
+	public static Integer hasInput(JsonArray memory,JsonObject input){
+		ArrayList<Integer> aux = new Gson().fromJson(input.get("input").getAsJsonArray(), ArrayList.class);
+		for (int i = 0; i < memory.size(); i++) {			
+			ArrayList<Integer> input_memo = new Gson().fromJson(memory.get(i).getAsJsonObject().get("input").getAsJsonArray(), ArrayList.class);
+			
+			if(input_memo.equals(aux)) return i;
+		}
+		return memory.size();
+		
+	}
 
 }
