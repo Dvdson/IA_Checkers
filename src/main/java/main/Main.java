@@ -65,16 +65,17 @@ public class Main {
 		frame.getContentPane().add(panel);
 		
 		final JButton btnPlay = new JButton("Play");
+		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				play(table, new Agente(1), new Agente(-1));
 			}
 		});
-		
 		btnPlay.setBounds(440, 125, 164, 44);
 		frame.getContentPane().add(btnPlay);
 		
 		JButton btnTrainng = new JButton("Training");
+		btnTrainng.setEnabled(false);
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Trainnig(table, new Agente(1), new Agente(-1));
