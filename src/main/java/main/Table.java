@@ -56,12 +56,16 @@ public class Table {
 		int piece_b = this.B_squares.get(next).piece;
 		
 		if(piece_b == 0){
-			this.B_squares.get(pos).setPiece(0);
-			this.B_squares.get(next).setPiece(piece_a);
+			B_squares.get(pos).setPiece(0);
+			if(piece_a == 1 && next >= 28)B_squares.get(next).setPiece(2);
+			else if(piece_a == -1 && next <= 3)B_squares.get(next).setPiece(-2);
+			else B_squares.get(next).setPiece(piece_a);
+			
 		}
 		else if((piece_b > 0 && piece_a > 0) || (piece_b < 0 && piece_a < 0)){}//movimento illegal
 		else{
 			boolean can_move = true;
+			pieces_to_erase.add(pos);
 			while(can_move){
 				
 				Integer diag_of_next = B_squares.get(atualpos).sq_around.indexOf(next);
@@ -82,8 +86,10 @@ public class Table {
 				for (Integer piece : pieces_to_erase) {
 					B_squares.get(piece).setPiece(0);
 				}
-				this.B_squares.get(pos).setPiece(0);
-				this.B_squares.get(atual_pos).setPiece(first);
+				
+				if(first == 1 && atual_pos >= 28)B_squares.get(atual_pos).setPiece(2);
+				else if(first == -1 && atual_pos <= 3)B_squares.get(atual_pos).setPiece(-2);
+				else B_squares.get(atual_pos).setPiece(first);
 			}
 			
 			
@@ -121,4 +127,18 @@ public class Table {
 		return p_a + p_b;
 	}
 	
+	public void randomDelete(int side){
+		for (Square square : B_squares) {
+			if(square.piece*side == 1){
+				square.setPiece(0);
+				return;
+			}
+		}
+		for (Square square : B_squares) {
+			if(square.piece*side == 2){
+				square.setPiece(0);
+				return;
+			}
+		}
+	}
 }

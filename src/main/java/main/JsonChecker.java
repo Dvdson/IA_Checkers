@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 public class JsonChecker {
 	
 	public static boolean isOK(JsonObject W){
-		
+		if(W == null) return false;
 		if(W.has("memory")){
 			if(W.get("memory").isJsonArray()){
 				for (int i = 0; i < W.get("memory").getAsJsonArray().size(); i++) {

@@ -81,7 +81,7 @@ public class Agente {
 						  	  -1,-1,-1,-1,-1,-1,-1,-1));
 		
 		ArrayList<Integer> to_analise = new ArrayList<Integer>();
-		ArrayList<Integer> myPieces = new ArrayList<Integer>();
+		ArrayList<Integer> my_pieces_to_move = new ArrayList<Integer>();
 		
 		qt_moves.set(choice, 0); qt_moves.set(choice, choice); to_analise.add(choice);
 		
@@ -96,39 +96,42 @@ public class Agente {
 						if(table.B_squares.get(j).piece == 0){
 							to_analise.add(j);
 						}else if(table.B_squares.get(j).piece*side > 0){
-							myPieces.add(j);
+							my_pieces_to_move.add(j);
 						}
 					}
 				}
 			}
 		}
 		
-		ArrayList<Integer> minor = new ArrayList<Integer>(Arrays.asList(100,100,100));
+		System.out.println(qt_moves);
+		System.out.println(previous);
 		
-		if(!myPieces.isEmpty()){
-			for (Integer myPiece : myPieces) {
+		ArrayList<Integer> minor_move = new ArrayList<Integer>(Arrays.asList(100,100,100));
+		
+		if(!my_pieces_to_move.isEmpty()){
+			for (Integer myPiece : my_pieces_to_move) {
 				if(myPiece*side == 1){//caso seja normal
-					if((table.B_squares.get(previous.get(myPiece)).Y - table.B_squares.get(myPiece).Y)*side < 0){}
-					else if(qt_moves.get(myPiece) < minor.get(0)){
-						minor.set(0, qt_moves.get(myPiece));
-						minor.set(1, myPiece);
-						minor.set(2, previous.get(myPiece));
+					
+					boolean isBehind = ((table.B_squares.get(previous.get(myPiece)).Y - table.B_squares.get(myPiece).Y)*side) < 0;
+					
+					if(isBehind && qt_moves.get(myPiece) < minor_move.get(0)){
+						
+						setMinor(minor_move, qt_moves.get(myPiece), myPiece, previous.get(myPiece));
+						
 					}
 				}else if (myPiece*side == 2){//caso seja uma rainha
 					ArrayList<Integer> moves = diagonal(table.B_squares, myPiece);
 					if(moves.contains(choice)){
-						minor.set(0, 1);
-						minor.set(1, myPiece);
-						minor.set(2, choice);
+						
+						setMinor(minor_move, 1, myPiece, choice);
+						
 					}else{//caso precise de duas rodadas
 						boolean notFound = true;
 						for (Integer nextPos : moves) {
 							if(notFound){
 								ArrayList<Integer> moves2 = diagonal(table.B_squares, nextPos);
 								if(moves2.contains(choice)){
-									minor.set(0, 2);
-									minor.set(1, myPiece);
-									minor.set(2, nextPos);
+									setMinor(minor_move, 2, myPiece, nextPos);
 								}
 							}
 						}
@@ -137,9 +140,14 @@ public class Agente {
 			}				
 		}
 
-		if(minor.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+		if(minor_move.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
 			
 			for (int i=0 ; i < table.B_squares.size(); ++i) {
+				
+				for (int j = 0; j < 4; j++) {
+					Integer diag = table.B_squares.get(i).sq_around.get(j);
+					//TODO reformular função foda-se
+				}
 				
 				if(table.B_squares.get(i).piece*side > 0){
 					
@@ -152,17 +160,13 @@ public class Agente {
 					if ((side == -1 || table.B_squares.get(i).piece*side == 2)) {
 						if(u_left>=0){
 							if(table.B_squares.get(u_left).piece == 0){
-								minor.set(0, 1);
-								minor.set(1, i);
-								minor.set(2, u_left);
+								setMinor(minor_move, 1, i, u_left);
 								break;
 							}
 							if(table.B_squares.get(u_left).piece*side < 0){
 								if(table.B_squares.get(u_left).sq_around.get(0)!=-1){
 									if(table.B_squares.get(table.B_squares.get(u_left).sq_around.get(0)).piece == 0){
-										minor.set(0, 1);
-										minor.set(1, i);
-										minor.set(2, u_left);
+										setMinor(minor_move, 1, i, u_left);
 										break;
 									}
 								}
@@ -170,17 +174,15 @@ public class Agente {
 						}
 						if(u_right>=0){
 							if(table.B_squares.get(u_right).piece == 0){
-								minor.set(0, 1);
-								minor.set(1, i);
-								minor.set(2, u_right);
+								
+								setMinor(minor_move, 1, i, u_right);
 								break;
 							}
 							if(table.B_squares.get(u_right).piece*side < 0){
 								if(table.B_squares.get(u_right).sq_around.get(1)!=-1){
 									if(table.B_squares.get(table.B_squares.get(u_right).sq_around.get(1)).piece == 0){
-										minor.set(0, 1);
-										minor.set(1, i);
-										minor.set(2, u_right);
+										
+										setMinor(minor_move, 1, i, u_right);
 										break;
 									}
 								}
@@ -190,17 +192,15 @@ public class Agente {
 					if ((side == 1 || table.B_squares.get(i).piece*side == 2)) {
 						if(d_left>=0){
 							if(table.B_squares.get(d_left).piece == 0){
-								minor.set(0, 1);
-								minor.set(1, i);
-								minor.set(2, d_left);
+								
+								setMinor(minor_move, 1, i, d_left);
 								break;
 							}
 							if(table.B_squares.get(d_left).piece*side < 0){
 								if(table.B_squares.get(d_left).sq_around.get(2)!=-1){
 									if(table.B_squares.get(table.B_squares.get(d_left).sq_around.get(2)).piece == 0){
-										minor.set(0, 1);
-										minor.set(1, i);
-										minor.set(2, d_left);
+										
+										setMinor(minor_move, 1, i, d_left);
 										break;
 									}
 								}
@@ -208,17 +208,15 @@ public class Agente {
 						}
 						if(d_right>=0){
 							if(table.B_squares.get(d_right).piece == 0){
-								minor.set(0, 1);
-								minor.set(1, i);
-								minor.set(2, d_right);
+								
+								setMinor(minor_move, 1, i, d_left);
 								break;
 							}
 							if(table.B_squares.get(d_right).piece*side < 0){
 								if(table.B_squares.get(d_right).sq_around.get(3)!=-1){
 									if(table.B_squares.get(table.B_squares.get(d_right).sq_around.get(3)).piece == 0){
-										minor.set(0, 1);
-										minor.set(1, i);
-										minor.set(2, d_right);
+										
+										setMinor(minor_move, 1, i, d_left);
 										break;
 									}
 								}
@@ -230,8 +228,14 @@ public class Agente {
 			}
 		}
 		
-		return minor;
+		return minor_move;
 		
+	}
+	
+	private void setMinor(ArrayList<Integer> minor, Integer qt, Integer atual, Integer next){
+		minor.set(0, qt);
+		minor.set(1, atual);
+		minor.set(2, next);
 	}
 	
 	ArrayList<Integer> diagonal(ArrayList<Square> tb,Integer x){
@@ -249,6 +253,7 @@ public class Agente {
 		}
 		return dig_pos;
 	}
+	
 	
 	int rounding(double number){
 		if(number > 31) number = 31;

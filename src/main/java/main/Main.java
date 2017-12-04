@@ -12,6 +12,9 @@ import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -64,11 +67,15 @@ public class Main {
 		
 		frame.getContentPane().add(panel);
 		
+		
+		
 		final JButton btnPlay = new JButton("Play");
-		btnPlay.setEnabled(false);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				play(table, new Agente(1), new Agente(-1));
+				
+				new Thread(new Game(table, new Agente(1), new Agente(-1), false)).start();
+				
+				
 			}
 		});
 		btnPlay.setBounds(440, 125, 164, 44);
@@ -78,7 +85,8 @@ public class Main {
 		btnTrainng.setEnabled(false);
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Trainnig(table, new Agente(1), new Agente(-1));
+				Game game_set = new Game(table, new Agente(1), new Agente(-1), true);
+				game_set.run();
 			}
 		});
 		btnTrainng.setBounds(440, 200, 164, 44);
@@ -100,33 +108,55 @@ public class Main {
 		});
 		btnNewTrain.setBounds(469, 62, 103, 23);
 		frame.getContentPane().add(btnNewTrain);
-		
-		
 	
 		
 		
 	}
 	
-	public void play(Table table,Agente player_a, Agente player_b){
-		
-		
-		table.loadGame();
-		int player = 0;
-		while(table.winner() == 0){
-			if(player%2 == 0){
-				
-				player_a.play(table);
-				
-			}else{
-				player_b.play(table);
-			}
-			
-			++player;
-		}
-		
-	}
-	
-	public void Trainnig(Table table,Agente player_a, Agente player_b){
-		table.loadGame();
-	}
+//	public void play(Table table,Agente player_a, Agente player_b){
+//		
+//		
+//		table.loadGame();
+//		
+//		int player = 0;
+//		while(table.winner() == 0){
+//			if(player%2 == 0){
+//				ArrayList<Integer> play  = player_a.play(table);
+//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+//					table.randomDelete(player_a.side);
+//				}else{
+//					table.movePiece(play.get(1), play.get(2));
+//				}
+//				System.out.println(play.toString());
+//			}else{
+//				ArrayList<Integer> play  = player_b.play(table);
+//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+//					table.randomDelete(player_b.side);
+//				}else{
+//					table.movePiece(play.get(1), play.get(2));
+//				}
+//				System.out.println(play.toString());
+//			}
+//			
+//			++player;
+//			
+//		}
+//		
+//	}
+//	
+//	public void Trainnig(Table table,Agente player_a, Agente player_b){
+//		table.loadGame();
+//		
+//		int player = 0;
+//		while(table.winner() == 0){
+//			if(player%2 == 0){
+//				player_a.play(table);
+//				
+//			}else{
+//				player_b.play(table);
+//			}
+//			
+//			++player;
+//		}
+//	}
 }

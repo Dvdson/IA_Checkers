@@ -26,10 +26,10 @@ public class Square {
 		Y = y;
 		sq_around = new ArrayList<Integer>();
 		
-		if(x-1 >= 0 && y-1 >= 0) sq_around.add((x-1)*4 + (y-1)/2); else sq_around.add(-1);
-		if(x+1 < 8 && y-1 >= 0) sq_around.add((x+1)*4 + (y-1)/2); else sq_around.add(-1);
-		if(x-1 >= 0 && y+1 < 8) sq_around.add((x-1)*4 + (y+1)/2); else sq_around.add(-1);
-		if(x+1 < 8 && y+1 < 8) sq_around.add((x+1)*4 + (y+1)/2); else sq_around.add(-1);
+		if(x-1 >= 0 && y-1 >= 0) sq_around.add((x-1)/2 + (y-1)*4); else sq_around.add(-1);
+		if(x+1 < 8 && y-1 >= 0) sq_around.add((x+1)/2 + (y-1)*4); else sq_around.add(-1);
+		if(x-1 >= 0 && y+1 < 8) sq_around.add((x-1)/2 + (y+1)*4); else sq_around.add(-1);
+		if(x+1 < 8 && y+1 < 8) sq_around.add((x+1)/2 + (y+1)*4); else sq_around.add(-1);
 		
 		label = new JLabel();
 		base_image = new ImageIcon(img1);
@@ -69,6 +69,7 @@ public class Square {
 		alter_image = aux_alter;
 		
 	}
+	
 	public void setPiece(Integer p){
 		piece = p;
 		if(p == 1){
@@ -92,10 +93,12 @@ public class Square {
 			label.setIcon(base_image);
 		}
 		if(p == 0){
-			base_image = new ImageIcon("W_square.png");
-			alter_image = new ImageIcon("B_square.png");
+			base_image = new ImageIcon("B_square.png");
+			alter_image = new ImageIcon("W_square.png");
 			label.setIcon(base_image);
 		}
+		 label.revalidate();
+		 label.repaint();
 	}
 	
 }

@@ -44,6 +44,7 @@ public class Neural {
 		if(JsonChecker.isOK(data)){
 			pesos = gson.fromJson(data.get("pesos"), ArrayList.class);
 		}else{
+			data = new JsonObject();
 			data.add("memory", new JsonArray());
 			data.add("pesos", new JsonArray(33));
 			for (int i = 0; i < 33; i++) {
