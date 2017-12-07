@@ -50,6 +50,13 @@ public class Square {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 					table.chosed =(int) X*4 - Y/2;
+					System.out.println("Funcionando2!");
+					
+					synchronized(Main.game) {
+						Main.game.notify();
+					}
+					
+					
 					//TODO notificar a tread de que o quadrado foi clicado
 			}
 		});

@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JButton;
 
@@ -14,6 +15,7 @@ public class Game implements Runnable {
 	JButton btn2;
 	MouseClickDetection MCD;
 	boolean isTrainning;
+	Object lock;
 	
 	public Game(Table table, Agente a, Agente b, boolean trainning, JButton btn1, JButton btn2) {
 		super();
@@ -23,7 +25,17 @@ public class Game implements Runnable {
 		this.btn1 = btn1;
 		this.btn2 = btn2;
 		isTrainning = trainning;
+		lock = new Object();
+		//this.lock = true;
 	}
+	
+//	public void unlock() {
+//		this.lock = false;
+//	}
+//	
+//	public void lock() {
+//		this.lock = true;
+//	}
 	
 	public void run() {
 		
@@ -80,38 +92,61 @@ public class Game implements Runnable {
 		
 		int player = 0;
 		while(true){
+			System.out.println("antes");
+			synchronized(this) {
+				System.out.println("aaa");
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//while(lock);
+				System.out.println("bbb");
+
+			}
+
 			if(player%2 == 0){
+				//				try {
+				//					wait();
+				//				} catch (InterruptedException e) {
+				//					// TODO Auto-generated catch block
+				//					e.printStackTrace();
+				//				}
+
 				//TODO fazer a thread esperar clickar em um quadrado
-				ArrayList<Integer> play  = A.train(table);
-				System.out.println(play.toString());
-				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
-					table.randomDelete(A.side);
-					
-				}else{
-					table.movePiece(play.get(1), play.get(2));
-					
-				}
-				
+//				ArrayList<Integer> play  = A.train(table);
+//				System.out.println(play.toString());
+//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+//					table.randomDelete(A.side);
+//
+//				}else{
+//					table.movePiece(play.get(1), play.get(2));
+//
+//				}
+
 			}else{
-				ArrayList<Integer> play  = B.play(table);
-				System.out.println(play.toString());
-				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
-					table.randomDelete(B.side);
-				}else{
-					table.movePiece(play.get(1), play.get(2));
-				}
-				
+//				ArrayList<Integer> play  = B.train(table);
+//				System.out.println(play.toString());
+//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+//					table.randomDelete(B.side);
+//				}else{
+//					table.movePiece(play.get(1), play.get(2));
+//				}
+
 			}
-			
+
 			++player;
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//this.lock();
+
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
+		
 	}
-	
+
 }
