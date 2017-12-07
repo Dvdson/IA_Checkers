@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 
-public class Table {
+public class Table extends Thread{
 
 	
 	ArrayList<Square> B_squares;
@@ -24,6 +24,8 @@ public class Table {
 		W_squares= new ArrayList<JLabel>();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	
 	public void initialize(JPanel panel){
 		
@@ -50,51 +52,82 @@ public class Table {
 		
 		ArrayList<Integer> pieces_to_erase = new ArrayList<Integer>();
 		
-		int atualpos = pos;
+		int atual_pos = next;
 		int piece_a = this.B_squares.get(pos).piece;
-		int first = piece_a;
 		int piece_b = this.B_squares.get(next).piece;
 		
-		if(piece_b == 0){
-			B_squares.get(pos).setPiece(0);
-			if(piece_a == 1 && next >= 28)B_squares.get(next).setPiece(2);
-			else if(piece_a == -1 && next <= 3)B_squares.get(next).setPiece(-2);
-			else B_squares.get(next).setPiece(piece_a);
+		pieces_to_erase.add(pos);
+	
+		
+		if(piece_b*piece_a < 0){
+			int diag = diagDir(pos, next);
+			int back_diag = counterDiag(diag);
+			pieces_to_erase.add(next);
+			atual_pos = B_squares.get(atual_pos).sq_around.get(diag);
+			boolean can_move = true;
+			
+			while(can_move && atual_pos!=-1){
+				int count = 0;
+				for (Integer i : B_squares.get(atual_pos).sq_around) {
+					
+					if(i!=-1 && count != back_diag){
+						if(B_squares.get(i).piece*piece_a < 0 && B_squares.get(i).sq_around.get(count) != -1){
+							Integer may_pos = B_squares.get(i).sq_around.get(count);
+							if(B_squares.get(may_pos).piece == 0){
+								atual_pos = B_squares.get(i).sq_around.get(count);
+								diag = count;
+								back_diag = counterDiag(count);
+								pieces_to_erase.add(i);
+								break;
+							}
+						}
+					}
+					count++;
+				}
+				if(count>=4) can_move = false;
+			}
 			
 		}
 		else if((piece_b > 0 && piece_a > 0) || (piece_b < 0 && piece_a < 0)){}//movimento illegal
-		else{
-			boolean can_move = true;
-			pieces_to_erase.add(pos);
-			while(can_move){
-				
-				Integer diag_of_next = B_squares.get(atualpos).sq_around.indexOf(next);
-				int atual_pos = B_squares.get(next).sq_around.get(diag_of_next);
-				
-				if(B_squares.get(atual_pos).piece == 0){
-					pieces_to_erase.add(next);
-					piece_a = B_squares.get(atual_pos).piece;
-					for (int i = 0; i < 4; i++) {
-						if(B_squares.get(pos).piece*B_squares.get(B_squares.get(atual_pos).sq_around.get(i)).piece < 0){
-							next = B_squares.get(atual_pos).sq_around.get(i);
-							piece_b = B_squares.get(next).piece;
-						}
-					}
-				}else{
-					can_move = false;
+		
+		erasing(pieces_to_erase);
+		if(piece_a == 1 && atual_pos >= 28)B_squares.get(atual_pos).setPiece(2);
+		else if(piece_a == -1 && atual_pos <= 3)B_squares.get(atual_pos).setPiece(-2);
+		else B_squares.get(atual_pos).setPiece(piece_a);
+	}
+	
+	private void erasing(ArrayList<Integer> pieces_to_erase){
+		for (Integer piece : pieces_to_erase) {
+			B_squares.get(piece).setPiece(0);
+		}
+	}
+	
+	private int counterDiag(int diag){
+		if(diag == 0) return 3;
+		if(diag == 1) return 2;
+		if(diag == 2) return 1;
+		if(diag == 3) return 0;
+		return -1;
+	}
+	
+	private int diagDir(int A, int B){
+		
+		Square aux = B_squares.get(A);
+		
+		for (int i = 0; i < 4; i++) {
+			int next = aux.sq_around.get(i);
+			while(next != -1){
+				if(B_squares.get(next).piece ==  0) {	
+					aux = B_squares.get(next);
+					next = B_squares.get(next).sq_around.get(i);
 				}
-				for (Integer piece : pieces_to_erase) {
-					B_squares.get(piece).setPiece(0);
-				}
-				
-				if(first == 1 && atual_pos >= 28)B_squares.get(atual_pos).setPiece(2);
-				else if(first == -1 && atual_pos <= 3)B_squares.get(atual_pos).setPiece(-2);
-				else B_squares.get(atual_pos).setPiece(first);
+				else if(aux.sq_around.get(i) == B) return i;
+				else next = -1;
 			}
-			
-			
+			aux = B_squares.get(A);
 		}
 		
+		return -1;
 	}
 	
 	public ArrayList<Integer> pieceTable(int side){
@@ -120,8 +153,8 @@ public class Table {
 	public int winner(){
 		int p_a = 0, p_b = 0;
 		for (Square square : B_squares) {
-			if(square.piece == 1) p_a = 1;
-			if(square.piece == -1) p_b = -1;
+			if(square.piece > 0) p_a = 1;
+			if(square.piece < 0) p_b = -1;
 		}
 		
 		return p_a + p_b;

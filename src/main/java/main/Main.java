@@ -67,13 +67,14 @@ public class Main {
 		
 		frame.getContentPane().add(panel);
 		
-		
-		
 		final JButton btnPlay = new JButton("Play");
+		final JButton btnTrainng = new JButton("Training");
+		
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				new Thread(new Game(table, new Agente(1), new Agente(-1), false)).start();
+				btnPlay.setEnabled(false);
+				btnTrainng.setEnabled(false);
+				new Thread(new Game(table, new Agente(1), new Agente(-1), false, btnPlay, btnTrainng)).start();
 				
 				
 			}
@@ -81,12 +82,11 @@ public class Main {
 		btnPlay.setBounds(440, 125, 164, 44);
 		frame.getContentPane().add(btnPlay);
 		
-		JButton btnTrainng = new JButton("Training");
-		btnTrainng.setEnabled(false);
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game game_set = new Game(table, new Agente(1), new Agente(-1), true);
-				game_set.run();
+				btnPlay.setEnabled(false);
+				btnTrainng.setEnabled(false);
+				new Thread(new Game(table, new Agente(1), new Agente(-1), true, btnTrainng, btnPlay)).start();
 			}
 		});
 		btnTrainng.setBounds(440, 200, 164, 44);

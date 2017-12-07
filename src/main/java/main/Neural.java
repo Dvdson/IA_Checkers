@@ -135,7 +135,7 @@ public class Neural {
 			
 			if (not_expected) count = 0;
 			
-			
+			save();
 		}
 		
 		
