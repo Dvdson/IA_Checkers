@@ -50,7 +50,7 @@ public class Square {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 					table.chosed =(int) X*4 - Y/2;
-					notify();
+					//TODO notificar a tread de que o quadrado foi clicado
 			}
 		});
 	}

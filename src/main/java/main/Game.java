@@ -81,24 +81,15 @@ public class Game implements Runnable {
 		int player = 0;
 		while(true){
 			if(player%2 == 0){
+				//TODO fazer a thread esperar clickar em um quadrado
 				ArrayList<Integer> play  = A.train(table);
 				System.out.println(play.toString());
 				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
 					table.randomDelete(A.side);
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 				}else{
 					table.movePiece(play.get(1), play.get(2));
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 				}
 				
 			}else{

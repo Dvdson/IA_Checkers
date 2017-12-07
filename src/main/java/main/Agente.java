@@ -70,7 +70,7 @@ public class Agente {
 		table.chosed  = -1;
 		
 		while(table.chosed == -1);
-		
+		//TODO escolher quadrado aqui aqui
 		net.execTreinamento(table.chosed);
 		
 		return pieceToMove(table,table.chosed);
