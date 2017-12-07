@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 public class Main {
 	
 	public static Game game;
-	public static MouseClickDetection mouseClick;
+	
 
 	private JFrame frame;
 
@@ -74,15 +74,15 @@ public class Main {
 		final JButton btnPlay = new JButton("Play");
 		final JButton btnTrainng = new JButton("Training");
 		
-		game = new Game(table, new Agente(1), new Agente(-1), false, btnPlay, btnTrainng);
-		mouseClick = new MouseClickDetection();
-		mouseClick.start();
+		
+		
 		
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				game = new Game(table, new Agente(1), new Agente(-1), false, btnPlay, btnTrainng);
 				btnPlay.setEnabled(false);
 				btnTrainng.setEnabled(false);
-
+				
 				new Thread(game).start();
 				
 				
@@ -93,6 +93,7 @@ public class Main {
 		
 		btnTrainng.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				game = new Game(table, new Agente(1), new Agente(-1), true, btnPlay, btnTrainng);
 				btnPlay.setEnabled(false);
 				btnTrainng.setEnabled(false);
 				new Thread(game).start();
@@ -101,23 +102,10 @@ public class Main {
 		btnTrainng.setBounds(440, 200, 164, 44);
 		frame.getContentPane().add(btnTrainng);
 		
-		JButton btnNewGame = new JButton("New Game");
-		btnNewGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewGame.setBounds(469, 28, 103, 23);
-		frame.getContentPane().add(btnNewGame);
-		
 		JButton btnNewTrain = new JButton("New Trainning");
 		btnNewTrain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Thread() {
-					public void run() {
-						game.trainning();
-					}
-				}.start();
+				
 			}
 		});
 		btnNewTrain.setBounds(469, 62, 103, 23);

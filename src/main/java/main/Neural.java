@@ -66,7 +66,9 @@ public class Neural {
 		double soma = 0;
 		
 		for(int i = 0; i < pesos.size(); i++) {
-			soma += pesos.get(i)*((double)entradas.get(i));
+			double A = entradas.get(i);
+			double B = pesos.get(i);
+			soma += A*B;
 		}
 		
 		return soma;
@@ -111,7 +113,11 @@ public class Neural {
 		Integer trainning_size = data.get("memory").getAsJsonArray().size();
 
 		for (int count = trainning_size - 1; count < trainning_size;) {
-			ArrayList<Integer> entrada = gson.fromJson(data.get("memory").getAsJsonArray().get(count).getAsJsonObject().get("input").getAsJsonArray(),ArrayList.class);
+			ArrayList<Double> temp = gson.fromJson(data.get("memory").getAsJsonArray().get(count).getAsJsonObject().get("input").getAsJsonArray(),ArrayList.class);
+			ArrayList<Integer> entrada = new ArrayList<Integer>();
+			for (Double i : temp) {
+				entrada.add(i.intValue());
+			}
 			double soma = soma(entrada);
 			double y = funcaoAtivacao(soma);
 			

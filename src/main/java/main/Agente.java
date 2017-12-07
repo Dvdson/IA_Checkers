@@ -67,9 +67,6 @@ public class Agente {
 		net.entradas = table.pieceTable(side);
 		net.entradas.add(1); //bias
 		
-		table.chosed  = -1;
-		
-		while(table.chosed == -1);
 		//TODO escolher quadrado aqui aqui
 		net.execTreinamento(table.chosed);
 		

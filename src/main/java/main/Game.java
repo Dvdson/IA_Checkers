@@ -93,58 +93,56 @@ public class Game implements Runnable {
 		int player = 0;
 		while(true){
 			System.out.println("antes");
-			synchronized(this) {
-				System.out.println("aaa");
+			
+
+			if(player%2 == 0){
+				
+				synchronized(this) {
+					System.out.println("aaa");
+					try {
+						this.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//while(lock);
+					System.out.println("bbb");
+
+				}
+				
+				//TODO fazer a thread esperar clickar em um quadrado
+				ArrayList<Integer> play  = A.train(table);
+				System.out.println(play.toString());
+				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+					table.randomDelete(A.side);
+
+				}else{
+					table.movePiece(play.get(1), play.get(2));
+
+				}
+
+			}else{
+				ArrayList<Integer> play  = B.play(table);
+				System.out.println(play.toString());
+				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
+					table.randomDelete(B.side);
+				}else{
+					table.movePiece(play.get(1), play.get(2));
+				}
+				
 				try {
-					this.wait();
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//while(lock);
-				System.out.println("bbb");
-
-			}
-
-			if(player%2 == 0){
-				//				try {
-				//					wait();
-				//				} catch (InterruptedException e) {
-				//					// TODO Auto-generated catch block
-				//					e.printStackTrace();
-				//				}
-
-				//TODO fazer a thread esperar clickar em um quadrado
-//				ArrayList<Integer> play  = A.train(table);
-//				System.out.println(play.toString());
-//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
-//					table.randomDelete(A.side);
-//
-//				}else{
-//					table.movePiece(play.get(1), play.get(2));
-//
-//				}
-
-			}else{
-//				ArrayList<Integer> play  = B.train(table);
-//				System.out.println(play.toString());
-//				if(play.equals(new ArrayList<Integer>(Arrays.asList(100,100,100)))){
-//					table.randomDelete(B.side);
-//				}else{
-//					table.movePiece(play.get(1), play.get(2));
-//				}
 
 			}
 
 			++player;
 			//this.lock();
 
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			
 		}
 		
 	}
